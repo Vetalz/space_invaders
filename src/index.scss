@@ -1,0 +1,50 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.field {
+  background-color: darkslategray;
+  height: 660px;
+  width: 1299px;
+  padding: 1px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell {
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  margin: 1px;
+}
+
+.invader {
+  background-color: blueviolet;
+}
+
+.player {
+  background-color: green;
+}
+
+.bullet {
+  background-color: red;
+}
+
+.result {
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+  animation-duration: 1s;
+}
+
+@keyframes blinker {
+  from { background-color: white; }
+  to { background-color: black; }
+}
