@@ -35,14 +35,13 @@ class Game {
   bullets = [];
   startPositionInvaders = [2, 8, 14, 20, 26, 32, 38, 44, 50, 56];
   deleteInvaderIndex = null;
-  result = null;
 
   constructor() {
     this.createField();
     this.player = new Player();
     this.player.positionX = Math.floor(this.SIZE_FIELD_X / 2) - 1;
 
-    this.renderPlayer(this.player);
+    this.renderPlayer();
     this.createInvaders();
     this.addEvents();
     this.gameLoop();
@@ -60,7 +59,7 @@ class Game {
         clearInterval(invaderSpeed);
         clearInterval(bulletSpeed);
       }
-    }, 200);
+    }, 100);
   }
 
   createField() {
@@ -126,9 +125,10 @@ class Game {
     if (this.isEnd) {
       return null;
     }
+
     for (let i = 0; i < this.bullets.length; i++) {
       if (this.renderBullet(this.bullets[i], i)) {
-        this.bullets[i].moveBullet()
+        this.bullets[i].move();
         this.renderBullet(this.bullets[i], i)
       }
     }
@@ -154,13 +154,15 @@ class Game {
     if (this.isEnd) {
       return null;
     }
+
     if (this.deleteInvaderIndex !== null) {
       this.invaders.splice(this.deleteInvaderIndex, 1);
       this.deleteInvaderIndex = null;
     }
+
     for (let i = 0; i < this.invaders.length; i++) {
       if (this.renderInvader(this.invaders[i], i)) {
-        this.invaders[i].moveInvader();
+        this.invaders[i].move();
         this.renderInvader(this.invaders[i], i);
       }
     }
@@ -173,26 +175,31 @@ class Game {
         if (this.isEnd) {
           return null;
         }
+
         if (this.player.positionX > 1) {
           this.renderPlayer();
-          this.player.positionX -= 1
+          this.player.move(e.code);
           this.renderPlayer();
         }
       }
+
       if (e.code === 'ArrowRight') {
         if (this.isEnd) {
           return null;
         }
+
         if (this.player.positionX < this.SIZE_FIELD_X - 2) {
           this.renderPlayer();
-          this.player.positionX += 1
+          this.player.move(e.code);
           this.renderPlayer();
         }
       }
+
       if (e.code === 'Space') {
         if (this.isEnd) {
           return null;
         }
+
         let bullet = new Bullet();
         bullet.positionX = this.player.positionX + 1;
         this.renderBullet(bullet);
@@ -219,6 +226,7 @@ class Game {
       this.isEnd = true;
       return null;
     }
+
     if (this.isEnd) {
       this.renderResult(this.PATTERN_LOSE);
       return null;

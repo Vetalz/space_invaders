@@ -2,7 +2,7 @@ class Bullet {
   positionX = 0;
   positionY = 27;
 
-  moveBullet() {
+  move() {
     this.positionY -= 1;
   }
 }

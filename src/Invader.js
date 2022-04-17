@@ -3,7 +3,7 @@ class Invader {
   positionX = 11;
   positionY = 0;
 
-  moveInvader() {
+  move() {
     this.positionY += 1;
   }
 }
